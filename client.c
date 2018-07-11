@@ -3,23 +3,22 @@
 int main(int argc, char *argv[])
 {
   if (argc < 2) {
-    printf("Port number and channel are mandatory\n");
+    printf("Port parameter is mandatory\n");
     return 0;
   }
 
-  zsock_t *client = zsock_new(ZMQ_SUB);
-  zsock_connect(client, "tcp://127.0.0.1:%s", argv[1]);
-  printf("Client connected to 127.0.0.1:%s\n", argv[1]);
+  printf("Connecting to echo...\n");
+  zsock_t *req = zsock_new(ZMQ_REQ);
+  char* name = "Client1";
 
-  zsock_set_subscribe(client, "");
-  //zsock_set_subscribe(client, "#general:");
+  zsock_set_identity(req, name);
+  zsock_connect(req, "tcp://localhost:%s", argv[1]);
+  zstr_sendf(req, "%s", name);
 
-  while (!zsys_interrupted) {
-    char *message = zstr_recv(client);
-    printf("%s%s", message, "\n");
-    zstr_free(&message);
-  }
+  char *message = zstr_recv(req);
+  printf("Received : %s\n", message);
+  zstr_free(&message);
 
-  zsock_destroy(&client);
+  zsock_destroy(&req);
   return 0;
 }
