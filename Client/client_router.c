@@ -1,14 +1,26 @@
 #include <czmq.h>
 
-int main (void)
+int main (int argc, char *argv[])
 {
+  if (argc < 2) {
+    printf("Port parameter is mandatory\n");
+    return 0;
+  }
+  srand(time(NULL));
+
+  int random_number;
+  char buffer[20];
+  random_number = rand() % 100 + 1;
+  sprintf(buffer, "%d", random_number);
   printf("Connecting to echo...\n");
+  char* name = buffer ;
+
   zsock_t *req = zsock_new(ZMQ_REQ);
-  zsock_set_identity(req, "test");
-  zsock_connect(req, "tcp://localhost:5555");
+  zsock_set_identity(req, name);
+  zsock_connect(req, "tcp://localhost:%s", argv[1]);
 
   int request_nbr;
-  for (request_nbr = 0; request_nbr != 10; request_nbr++) {
+  while(!zsys_interrupted) {
     zstr_sendf(req, "Hello world !");
 
     char *message = zstr_recv(req);

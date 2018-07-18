@@ -1,40 +1,68 @@
 #include <czmq.h>
+#include <pthread.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include "../Structure/GameInfo.h"
 //Crée structure pour les zsock
 //Void* donc -> cast
 
 
-void *thread_1(void *arg)
+void *thread_1(void *router)
 {
-    printf("%s\n", "tageueule");
+    struct GameInfo player;
+    player.players[0] ="empty";
+    player.players[1] ="empty";
+    player.players[2] ="empty";
+    player.players[3] ="empty";
+    printf("%s\n", "Server Started");
     while (!zsys_interrupted) {
-    zmsg_t *message = zmsg_recv(router);
+        zmsg_t *message = zmsg_recv(router);
+        zframe_t *identity = zmsg_pop(message);
+        zframe_t *empty = zmsg_pop(message);
+        zframe_t *content = zmsg_pop(message);
 
-    zframe_t *identity = zmsg_pop(message);
-    zframe_t *identity2 = zframe_from("test");
-    zframe_t *empty = zmsg_pop(message);
-    zframe_t *content = zmsg_pop(message);
+        for ( int i = 0; i <= 3; i++) {
+          if (i != 0) {
+               if (player.players[i] == "empty" && player.players[i] != zframe_strdup(identity) && player.players[i - 1] != zframe_strdup(identity)) {
+               //if (strcmp(player.players[i], "empty") == 0 && strcmp(player.players[i], zframe_strdup(identity)) != 0 && strcmp(player.players[i - 1], zframe_strdup(identity)) != 0) {
+              player.players[i] = zframe_strdup(identity);
+            }
+          }
+          else {
+              //if (strcmp(player.players[i], "empty") == 0 && strcmp(player.players[i], zframe_strdup(identity)) != 0) {
+            if (player.players[i] == "empty" && player.players[i] != zframe_strdup(identity)) {
+              player.players[i] = zframe_strdup(identity);
+            }
+          }
+         
+        }
+        
 
-    zmsg_destroy(&message);
-    printf("Content of message is : %s\n %s\n", zframe_strdup(content),zframe_strdup(identity));
-    sleep(1);
+        zmsg_destroy(&message);
+        for ( int i = 0; i <= 3; i++) {
+           printf("Identity : %s\n", player.players[1]);
+        }
+        printf("Content of message is : %s\n", zframe_strdup(content));
+        sleep(1);
 
-    zmsg_t *response = zmsg_new();
+        zmsg_t *response = zmsg_new();
 
-    zmsg_prepend(response, &identity);
-    zmsg_append(response, &empty);
-    zmsg_append(response, &content);
+        zmsg_prepend(response, &identity);
+        zmsg_append(response, &empty);
+        zmsg_append(response, &content);
 
-    zmsg_send(&response, router);
-    zmsg_destroy(&response);
+        zmsg_send(&response, router);
+        zmsg_destroy(&response);
 
-    zframe_destroy(&identity);
-    zframe_destroy(&empty);
-    zframe_destroy(&content);
-  }
+        zframe_destroy(&identity);
+        zframe_destroy(&empty);
+        zframe_destroy(&content);
+    }
     return 0;
 
     /* Pour enlever le warning */
-    (void) arg;
+    (void) router;
     pthread_exit(NULL);
 }
 
@@ -48,7 +76,8 @@ int main(int argc, char* argv[])
   }
 
   zsock_t *router = zsock_new(ZMQ_ROUTER);
-  zsock_bind(router, "tcp://*:5555");
+  zsock_bind(router, "tcp://*:%s", argv[1]);
+  printf("Server listening on tcp://*:%s\n", argv[1]);
 
   if (pthread_create(&thread1, NULL, thread_1, router)) {
   perror("pthread_create");
