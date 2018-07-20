@@ -24,15 +24,10 @@ void *thread_1(void *router)
         int verif = 0;
 
         for ( int i = 0; i <= 3; i++) {
-          printf("%s\n", player.players[i]);
-          printf("%s\n", zframe_strdup(identity));
-         if(strcmp(player.players[i], zframe_strdup(identity)) == 0)
-         {
-          printf("%s\n", "1");
+         if(strcmp(player.players[i], zframe_strdup(identity)) == 0) {
           verif = 1;
          }
          else {
-          printf("%s\n", "0");
          }
         }
         for ( int y = 0; y <= 3; y++) {
@@ -44,18 +39,14 @@ void *thread_1(void *router)
          }
       }
 
+      //STEVEN
+
       zmsg_destroy(&message);
       for ( int i = 0; i <= 3; i++) {
          printf("Identity : %s\n", player.players[i]);
       }
       //printf("Content of message is : %s\n", zframe_strdup(content));
       sleep(2);
-      zmsg_destroy(&message);
-      for ( int i = 0; i <= 3; i++) {
-         printf("Identity : %s\n", player.players[1]);
-      }
-      printf("Content of message is : %s\n", zframe_strdup(content));
-      sleep(1);
 
       zmsg_t *response = zmsg_new();
 
