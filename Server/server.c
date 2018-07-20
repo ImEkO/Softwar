@@ -31,30 +31,25 @@ void *thread_1(void *router)
           printf("%s\n", "1");
           verif = 1;
          }
-         else
-         {
+         else {
           printf("%s\n", "0");
          }
         }
         for ( int y = 0; y <= 3; y++) {
-         if( verif == 0 && player.players[y] == "empty")
-         {
+         if( verif == 0 && player.players[y] == "empty") {
           player.players[y] = zframe_strdup(identity);
           verif = 1;
          }
-         else
-         {
+         else {
          }
-        }
-        
+      }
 
-        zmsg_destroy(&message);
-        for ( int i = 0; i <= 3; i++) {
-           printf("Identity : %s\n", player.players[i]);
-        }
-        //printf("Content of message is : %s\n", zframe_strdup(content));
-        sleep(2);
-
+      zmsg_destroy(&message);
+      for ( int i = 0; i <= 3; i++) {
+         printf("Identity : %s\n", player.players[i]);
+      }
+      //printf("Content of message is : %s\n", zframe_strdup(content));
+      sleep(2);
       zmsg_destroy(&message);
       for ( int i = 0; i <= 3; i++) {
          printf("Identity : %s\n", player.players[1]);
