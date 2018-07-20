@@ -21,30 +21,39 @@ void *thread_1(void *router)
         zframe_t *identity = zmsg_pop(message);
         zframe_t *empty = zmsg_pop(message);
         zframe_t *content = zmsg_pop(message);
+        int verif = 0;
 
         for ( int i = 0; i <= 3; i++) {
-          if (i != 0) {
-               if (player.players[i] == "empty" && player.players[i] != zframe_strdup(identity) && player.players[i - 1] != zframe_strdup(identity)) {
-               //if (strcmp(player.players[i], "empty") == 0 && strcmp(player.players[i], zframe_strdup(identity)) != 0 && strcmp(player.players[i - 1], zframe_strdup(identity)) != 0) {
-              player.players[i] = zframe_strdup(identity);
-            }
-          }
-          else {
-              //if (strcmp(player.players[i], "empty") == 0 && strcmp(player.players[i], zframe_strdup(identity)) != 0) {
-            if (player.players[i] == "empty" && player.players[i] != zframe_strdup(identity)) {
-              player.players[i] = zframe_strdup(identity);
-            }
-          }
-         
+          printf("%s\n", player.players[i]);
+          printf("%s\n", zframe_strdup(identity));
+         if(strcmp(player.players[i], zframe_strdup(identity)) == 0)
+         {
+          printf("%s\n", "1");
+          verif = 1;
+         }
+         else
+         {
+          printf("%s\n", "0");
+         }
+        }
+        for ( int y = 0; y <= 3; y++) {
+         if( verif == 0 && player.players[y] == "empty")
+         {
+          player.players[y] = zframe_strdup(identity);
+          verif = 1;
+         }
+         else
+         {
+         }
         }
         
 
         zmsg_destroy(&message);
         for ( int i = 0; i <= 3; i++) {
-           printf("Identity : %s\n", player.players[1]);
+           printf("Identity : %s\n", player.players[i]);
         }
-        printf("Content of message is : %s\n", zframe_strdup(content));
-        sleep(1);
+        //printf("Content of message is : %s\n", zframe_strdup(content));
+        sleep(2);
 
         zmsg_t *response = zmsg_new();
 
