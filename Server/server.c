@@ -55,18 +55,25 @@ void *thread_1(void *router)
         //printf("Content of message is : %s\n", zframe_strdup(content));
         sleep(2);
 
-        zmsg_t *response = zmsg_new();
+      zmsg_destroy(&message);
+      for ( int i = 0; i <= 3; i++) {
+         printf("Identity : %s\n", player.players[1]);
+      }
+      printf("Content of message is : %s\n", zframe_strdup(content));
+      sleep(1);
 
-        zmsg_prepend(response, &identity);
-        zmsg_append(response, &empty);
-        zmsg_append(response, &content);
+      zmsg_t *response = zmsg_new();
 
-        zmsg_send(&response, router);
-        zmsg_destroy(&response);
+      zmsg_prepend(response, &identity);
+      zmsg_append(response, &empty);
+      zmsg_append(response, &content);
 
-        zframe_destroy(&identity);
-        zframe_destroy(&empty);
-        zframe_destroy(&content);
+      zmsg_send(&response, router);
+      zmsg_destroy(&response);
+
+      zframe_destroy(&identity);
+      zframe_destroy(&empty);
+      zframe_destroy(&content);
     }
     return 0;
 
