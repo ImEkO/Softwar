@@ -9,7 +9,7 @@ gcc -pthread file.c -lzmq -lczmq
 
 
 ## DOC CLIENT.JS: 
-cd Client
-npm install
-node client.js
-let's go !
+cd Client   
+npm install  
+node client.js  
+let's go !  
