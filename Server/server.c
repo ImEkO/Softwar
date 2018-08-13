@@ -69,7 +69,7 @@ void *thread_1(void *router)
     pthread_exit(NULL);
 }
 
-int  pointeur_fonction(int argc, char** argv, char c)
+int  pointeur_fonction(char* c)
 {
   char* strg;
   int (*tab[5]) ();
