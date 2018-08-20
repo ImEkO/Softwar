@@ -73,12 +73,21 @@ int  pointeur_fonction(char* c)
 {
   char* strg;
   int (*tab[5]) ();
+  char (*tabstr[5]) ();
   int i;
 
   i = 0;
-  if (argc){}
-  if (argv){}
-  strg = "darlA";
+  tabstr[0] = "";
+  tabstr[1] = "";
+  tabstr[2] = "";
+  tabstr[3] = "";
+  tabstr[4] = "";
+  tabstr[5] = "";
+  tabstr[6] = "";
+  tabstr[7] = "";
+  tabstr[8] = "";
+  tabstr[9] = "";
+
   tab[0] = &ls_d;
   tab[1] = &ls_a;
   tab[2] = &ls_r;
