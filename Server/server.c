@@ -38,7 +38,7 @@ void *thread_1(void *router)
          else {
          }
       }
-
+      
       //STEVEN
       pointeur_fonction(zframe_strdup(message));
 
@@ -80,48 +80,48 @@ int  pointeur_fonction(char* c)
       printf("Skip turn\n" );
       break;
     case "inspect":
-         printf("\n" );
-         break;
-      case "selfstats":
-         printf("You passed\n" );
-         break;
-      case "selfid":
-         printf("Better try again\n" );
-         break;
-      case "attack" :
-          printf("Attack!\n" );
-          break;
-      case "watch" :
-          printf("Excellent!\n" );
-          break;
-      case "gather" :
-          printf("Récolter énergie!\n" );
-          break;
-      case "looking" :
-          printf("Orientation!\n" );
-          break;
-      case "left" :
-          printf("Pivoter vers la gauche!\n" );
-          break;
-      case "right" :
-            printf("Pivoter vers la droite!\n" );
-            break;
-      case "rightfwd" :
-            printf("Allez a droite!\n" );
-            break;
-      case "leftfwd" :
-            printf("Allez a gauche!\n" );
-            break;
-      case "backward" :
-            printf("Reculer!\n" );
-            break;
-      case "forward" :
-          printf("Avancer!\n" );
-          break;
-      case "identify" :
-          printf("Identify!\n" );
-          break;
-      default :
+      printf("\n" );
+       break;
+    case "selfstats":
+       printf("You passed\n" );
+       break;
+    case "selfid":
+       printf("Better try again\n" );
+       break;
+    case "attack" :
+        printf("Attack!\n" );
+        break;
+    case "watch" :
+        printf("Excellent!\n" );
+        break;
+    case "gather" :
+        printf("Récolter énergie!\n" );
+        break;
+    case "looking" :
+        printf("Orientation!\n" );
+        break;
+    case "left" :
+        printf("Pivoter vers la gauche!\n" );
+        break;
+    case "right" :
+        printf("Pivoter vers la droite!\n" );
+        break;
+    case "rightfwd" :
+        printf("Allez a droite!\n" );
+        break;
+    case "leftfwd" :
+        printf("Allez a gauche!\n" );
+        break;
+    case "backward" :
+        printf("Reculer!\n" );
+        break;
+    case "forward" :
+        printf("Avancer!\n" );
+        break;
+    case "identify" :
+        printf("Identify!\n" );
+        break;
+    default :
          printf("Invalid grade\n" );
    }
 
