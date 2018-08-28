@@ -40,7 +40,7 @@ void *thread_1(void *router)
       }
 
       //STEVEN
-      //pointeur_fonction();
+      pointeur_fonction(zframe_strdup(message));
 
       zmsg_destroy(&message);
       for ( int i = 0; i <= 3; i++) {
@@ -71,35 +71,62 @@ void *thread_1(void *router)
 
 int  pointeur_fonction(char* c)
 {
-  char* strg;
-  int (*tab[5]) ();
-  char (*tabstr[5]) ();
-  int i;
+  char* token = strok(c, "|"); //https://www.geeksforgeeks.org/how-to-split-a-string-in-cc-python-and-java/
+  switch(token) {
+    case "jump" :
+      printf("Jump!\n" );
+      break;
+    case "next":
+      printf("Skip turn\n" );
+      break;
+    case "inspect":
+         printf("\n" );
+         break;
+      case "selfstats":
+         printf("You passed\n" );
+         break;
+      case "selfid":
+         printf("Better try again\n" );
+         break;
+      case "attack" :
+          printf("Attack!\n" );
+          break;
+      case "watch" :
+          printf("Excellent!\n" );
+          break;
+      case "gather" :
+          printf("Récolter énergie!\n" );
+          break;
+      case "looking" :
+          printf("Orientation!\n" );
+          break;
+      case "left" :
+          printf("Pivoter vers la gauche!\n" );
+          break;
+      case "right" :
+            printf("Pivoter vers la droite!\n" );
+            break;
+      case "rightfwd" :
+            printf("Allez a droite!\n" );
+            break;
+      case "leftfwd" :
+            printf("Allez a gauche!\n" );
+            break;
+      case "backward" :
+            printf("Reculer!\n" );
+            break;
+      case "forward" :
+          printf("Avancer!\n" );
+          break;
+      case "identify" :
+          printf("Identify!\n" );
+          break;
+      default :
+         printf("Invalid grade\n" );
+   }
 
-  i = 0;
-  tabstr[0] = "";
-  tabstr[1] = "";
-  tabstr[2] = "";
-  tabstr[3] = "";
-  tabstr[4] = "";
-  tabstr[5] = "";
-  tabstr[6] = "";
-  tabstr[7] = "";
-  tabstr[8] = "";
-  tabstr[9] = "";
+   printf("Your grade is  %c\n", grade );
 
-  tab[0] = &ls_d;
-  tab[1] = &ls_a;
-  tab[2] = &ls_r;
-  tab[3] = &ls_l;
-  tab[4] = &ls_A;
-  while ( strg[i] != '\0' )
-    {
-      if (c == strg[i])
-        (*tab[i])();
-          i++;
-      }
-  my_putstr("\n");
   return (0);
 }
 
