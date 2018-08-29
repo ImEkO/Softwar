@@ -1,8 +1,3 @@
-#include <czmq.h>
-#include <pthread.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
 #include "../Structure/GameInfo.h"
 //Crée structure pour les zsock
 //Void* donc -> cast
@@ -40,7 +35,7 @@ void *thread_1(void *router)
       }
       
       //STEVEN
-      pointeur_fonction(zframe_strdup(message));
+      pointeur_fonction(zframe_strdup(content));
 
       zmsg_destroy(&message);
       for ( int i = 0; i <= 3; i++) {
@@ -71,61 +66,65 @@ void *thread_1(void *router)
 
 int  pointeur_fonction(char* c)
 {
-  char* token = strok(c, "|"); //https://www.geeksforgeeks.org/how-to-split-a-string-in-cc-python-and-java/
-  switch(token) {
-    case "jump" :
-      printf("Jump!\n" );
-      break;
-    case "next":
-      printf("Skip turn\n" );
-      break;
-    case "inspect":
-      printf("\n" );
-       break;
-    case "selfstats":
-       printf("You passed\n" );
-       break;
-    case "selfid":
-       printf("Better try again\n" );
-       break;
-    case "attack" :
-        printf("Attack!\n" );
-        break;
-    case "watch" :
-        printf("Excellent!\n" );
-        break;
-    case "gather" :
-        printf("Récolter énergie!\n" );
-        break;
-    case "looking" :
-        printf("Orientation!\n" );
-        break;
-    case "left" :
-        printf("Pivoter vers la gauche!\n" );
-        break;
-    case "right" :
-        printf("Pivoter vers la droite!\n" );
-        break;
-    case "rightfwd" :
-        printf("Allez a droite!\n" );
-        break;
-    case "leftfwd" :
-        printf("Allez a gauche!\n" );
-        break;
-    case "backward" :
-        printf("Reculer!\n" );
-        break;
-    case "forward" :
-        printf("Avancer!\n" );
-        break;
-    case "identify" :
-        printf("Identify!\n" );
-        break;
-    default :
-         printf("Invalid grade\n" );
-   }
+  char* token = strtok(c, "|"); //https://www.geeksforgeeks.org/how-to-split-a-string-in-cc-python-and-java/
+  printf(token, "%s");
+  if(strcmp(token, "jump") == 0)
+    {
+        printf("Jump!\n" );
+    }
+  else if(strcmp(token, "forward") == 0)
+    {
+        printf("forward\n");
+    }
+  else if(strcmp(token, "backward") == 0)
+    {
+        printf("backward!\n" );
+    }
+  else if(strcmp(token, "leftfwd") == 0)
+    {
+        printf("leftfwd\n" );
+    }
+  else if(strcmp(token, "rightfwd") == 0)
+    {
+        printf("rightfwd\n" );
+    }
+  else if(strcmp(token, "right") == 0)
+    {
+        printf("right\n" );
+    }
+  else if(strcmp(token, "left") == 0)
+    {
+        printf("left\n" );
+    }
+  else if(strcmp(token, "looking") == 0)
+    {
+        printf("looking\n" );
+    }
+  else if(strcmp(token, "gather") == 0)
+    {
+        printf("gather\n" );
+    }
+  else if(strcmp(token, "watch") == 0)
+    {
+        printf("watch\n" );
+    }
+  else if(strcmp(token, "attack") == 0)
+    {
+        printf("attack\n" );
+    }
+  else if(strcmp(token, "selfid") == 0)
+    {
+        printf("selfid\n" );
+    }
+  else if(strcmp(token, "selfstats") == 0)
+    {
+        printf("selfstats\n" );
+    }
+  else
+  {
+    printf("test\n");
+  }
 
-   printf("Your grade is  %c\n", grade );
 
   return (0);
 }

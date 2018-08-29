@@ -14,9 +14,13 @@ rl.on('line', (line) => {
   var split = line.split("|");
   console.log(split);
   switch (split[0]) {
-    case 'Identify':
+    case 'identify':
       console.log('Identify');
       identify(split[1]);
+      break;
+    case 'jump':
+      console.log('Jump');
+      jump(split[0], split[1]);
       break;
     default:
       console.log("No identify");
@@ -40,5 +44,20 @@ function identify(id)
 
   for (var i = 0; i < 10; ++i) {
     requester.send("Hello");
+  }
+}
+
+function jump(cmd,id)
+{
+  requester.identity = id
+  requester.connect('tcp://localhost:3030');
+  var replyNbr = 0;
+  requester.on('message', function(msg) {
+  console.log('got reply', replyNbr, msg.toString());
+  replyNbr += 1;
+  });
+
+  for (var i = 0; i < 2; ++i) {
+    requester.send(cmd);
   }
 }
