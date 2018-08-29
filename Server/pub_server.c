@@ -1,26 +1,18 @@
+#include <stdio.h>
 #include <czmq.h>
 
-
-int main(int argc, char *argv[])
+int main()
 {
-  if (argc < 2) {
-    printf("Port number is mandatory\n");
+    // create the zeromq context
+    void *ctx = zctx_new();
+    void *pub = zsocket_new(ctx, ZMQ_PUB);
+    zsocket_connect(pub, "localhost:4242"); 
+    printf("multicast initialized\n");
+
+    while(!zctx_interrupted) {
+        zstr_sendm (pub, "testing", ZMQ_SNDMORE);
+        zstr_send(pub, "This is a test");
+    }
+
     return 0;
-  }
-
-  zsock_t *chat_srv_socket = zsock_new(ZMQ_PUB);
-  zsock_bind(chat_srv_socket, "tcp://*:%s", argv[1]);
-  printf("Server listening on tcp://*:%s\n", argv[1]);
-
-  while (!zsys_interrupted) {
-    //char message[1024];
-
-    /*if (!fgets(message, 1024, stdin)) {
-      break;
-    }*/
-    //zstr_sendf(chat_srv_socket, "%s", message);
-    zstr_sendf(chat_srv_socket, "%s", "Je suis là");
-  }
-  zsock_destroy(&chat_srv_socket);
-  return 0;
 }
