@@ -5,25 +5,22 @@
 
 void *thread_1(void *router)
 {
-    struct GameInfo game;
-    struct PlayerList plist;
-    struct Player p1;
-    struct Player p2;
-    struct Player p3;
-    struct Player p4;
+    struct GameInfo* game;
+    Player* player1;
 
-    p1.name = "Loris";
-    p1.x = "0";
+    player1 = malloc(sizeof(Player));
+    game = malloc(sizeof(struct GameInfo));
+    game->player_list = malloc(sizeof(PlayerList));
+    game->player_list->player1 = malloc(sizeof(Player));
 
-    plist.player1 = p1;
-    plist.player2 = p2;
-    plist.player3 = p3;
-    plist.player4 = p4;
-    game.energy_cell = malloc(sizeof(EnergyCell));
-    game.players[0] ="empty";
-    game.players[1] ="empty";
-    game.players[2] ="empty";
-    game.players[3] ="empty";
+    player1->name = "Loris";
+    player1->x = "0";
+
+    game->player_list->player1 = player1;
+  /*  game->player_list->player2 = p2;
+    game->player_list->player3 = p3;
+    game->player_list->player4 = p4;*/
+    game->energy_cell = malloc(sizeof(EnergyCell));
     printf("%s\n", "Server Started");
     while (!zsys_interrupted) {
         zmsg_t *message = zmsg_recv(router);
@@ -33,15 +30,15 @@ void *thread_1(void *router)
         int verif = 0;
 
         for ( int i = 0; i <= 3; i++) {
-         if(strcmp(player.players[i], zframe_strdup(identity)) == 0) {
+         if(strcmp(player1->name, zframe_strdup(identity)) == 0) {
           verif = 1;
          }
          else {
          }
         }
         for ( int y = 0; y <= 3; y++) {
-         if( verif == 0 && player.players[y] == "empty") {
-          player.players[y] = zframe_strdup(identity);
+         if( verif == 0 && player1->name == "empty") {
+          player1->name = zframe_strdup(identity);
           verif = 1;
          }
          else {
@@ -50,10 +47,10 @@ void *thread_1(void *router)
 
       //STEVEN
       pointeur_fonction(zframe_strdup(content));
-      player.energy_cell->value = 4;
+      game->energy_cell->value = 4;
       zmsg_destroy(&message);
       for ( int i = 0; i <= 3; i++) {
-         printf("Identity : %s\n", player.players[i]);
+         printf("Identity : %s\n", player1->name);
 
       }
       //printf("Content of message is : %s\n", zframe_strdup(content));

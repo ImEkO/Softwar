@@ -1,7 +1,7 @@
 var zmq       = require('zmq')
   , requester = zmq.socket('req');
 
-const readline = require('readline');
+/*const readline = require('readline');
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
@@ -30,9 +30,21 @@ rl.on('line', (line) => {
 }).on('close', () => {
   console.log('Game Over');
   process.exit(0);
-});
+});*/
 
-function identify(cmd,id, line)
+var identifier = "OXO"+random()
+identify("identify", identifier, "identify|"+identifier);
+switch (urand()) {
+  case 1:
+    console.log('Jump');
+    jump("jump", "null", "jump|null");
+    break;
+  default:
+    console.log("No identify");
+    break;
+}
+
+function identify(cmd, id, line)
 {
   requester.identity = id
   requester.connect('tcp://localhost:3030');
@@ -47,7 +59,7 @@ function identify(cmd,id, line)
   }
 }
 
-function jump(cmd,id, line)
+function jump(cmd, id, line)
 {
   requester.identity = id
   requester.connect('tcp://localhost:3030');
