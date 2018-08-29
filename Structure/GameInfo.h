@@ -8,7 +8,6 @@ typedef struct s_Energycell EnergyCell;
 struct s_Energycell
 {
     EnergyCell *next;
-    void *data;
     int   x;
     int   y;
     int   value;
