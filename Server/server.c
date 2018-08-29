@@ -5,13 +5,25 @@
 
 void *thread_1(void *router)
 {
-    struct GameInfo player;
-    player.energy_cell = malloc(sizeof(EnergyCell));
-    player.player_list = malloc(sizeof(Player));
-    player.players[0] ="empty";
-    player.players[1] ="empty";
-    player.players[2] ="empty";
-    player.players[3] ="empty";
+    struct GameInfo game;
+    struct PlayerList plist;
+    struct Player p1;
+    struct Player p2;
+    struct Player p3;
+    struct Player p4;
+
+    p1.name = "Loris";
+    p1.x = "0";
+
+    plist.player1 = p1;
+    plist.player2 = p2;
+    plist.player3 = p3;
+    plist.player4 = p4;
+    game.energy_cell = malloc(sizeof(EnergyCell));
+    game.players[0] ="empty";
+    game.players[1] ="empty";
+    game.players[2] ="empty";
+    game.players[3] ="empty";
     printf("%s\n", "Server Started");
     while (!zsys_interrupted) {
         zmsg_t *message = zmsg_recv(router);
@@ -70,62 +82,48 @@ void *thread_1(void *router)
 int  pointeur_fonction(char* c)
 {
   char* token = strtok(c, "|"); //https://www.geeksforgeeks.org/how-to-split-a-string-in-cc-python-and-java/
-  
-  if(strcmp(token, "jump") == 0)
-    {
+
+  if(strcmp(token, "jump") == 0){
         printf("Jump!\n" );
     }
-  else if(strcmp(token, "forward") == 0)
-    {
+  else if(strcmp(token, "forward") == 0){
         printf("forward\n");
     }
-  else if(strcmp(token, "backward") == 0)
-    {
+  else if(strcmp(token, "backward") == 0){
         printf("backward!\n" );
     }
-  else if(strcmp(token, "leftfwd") == 0)
-    {
+  else if(strcmp(token, "leftfwd") == 0){
         printf("leftfwd\n" );
     }
-  else if(strcmp(token, "rightfwd") == 0)
-    {
+  else if(strcmp(token, "rightfwd") == 0){
         printf("rightfwd\n" );
     }
-  else if(strcmp(token, "right") == 0)
-    {
+  else if(strcmp(token, "right") == 0){
         printf("right\n" );
     }
-  else if(strcmp(token, "left") == 0)
-    {
+  else if(strcmp(token, "left") == 0){
         printf("left\n" );
     }
-  else if(strcmp(token, "looking") == 0)
-    {
+  else if(strcmp(token, "looking") == 0){
         printf("looking\n" );
     }
-  else if(strcmp(token, "gather") == 0)
-    {
+  else if(strcmp(token, "gather") == 0){
         printf("gather\n" );
     }
-  else if(strcmp(token, "watch") == 0)
-    {
+  else if(strcmp(token, "watch") == 0){
         printf("watch\n" );
     }
-  else if(strcmp(token, "attack") == 0)
-    {
+  else if(strcmp(token, "attack") == 0){
         printf("attack\n" );
     }
-  else if(strcmp(token, "selfid") == 0)
-    {
+  else if(strcmp(token, "selfid") == 0){
         printf("selfid\n" );
     }
-  else if(strcmp(token, "selfstats") == 0)
-    {
+  else if(strcmp(token, "selfstats") == 0){
         printf("selfstats\n" );
     }
-  else if (strcmp(token, "identify") == 0)
-  {
-    printf("identify\n");
+  else if (strcmp(token, "identify") == 0){
+    printf("Identify\n");
   }
   else {
     printf("error\n");

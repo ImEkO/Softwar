@@ -24,12 +24,21 @@ struct s_player
     int looking;
 };
 
+typedef struct s_player_list PlayerList;
+struct s_player_list
+{
+  Player *player1;
+  Player *player2;
+  Player *player3;
+  Player *player4;
+};
+
 struct GameInfo {
   int map_size;
   int game_status;
-  char* players[4];
+  //char* players[4];
   EnergyCell *energy_cell;
-  Player *player_list;
+  PlayerList *Player_list;
 };
 
 int  pointeur_fonction(char* c);
