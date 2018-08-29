@@ -29,6 +29,7 @@ struct GameInfo {
   int game_status;
   char* players[4];
   EnergyCell *energy_cell;
+  Player *player_list;
 };
 
 int  pointeur_fonction(char* c);

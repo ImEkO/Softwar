@@ -7,6 +7,7 @@ void *thread_1(void *router)
 {
     struct GameInfo player;
     player.energy_cell = malloc(sizeof(EnergyCell));
+    player.player_list = malloc(sizeof(Player));
     player.players[0] ="empty";
     player.players[1] ="empty";
     player.players[2] ="empty";
