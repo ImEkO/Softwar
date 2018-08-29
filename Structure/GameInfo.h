@@ -4,13 +4,21 @@
 #include <stdio.h>
 #include <string.h>
 
-struct GameInfo {
-  //energy_cells: list<EnergyCell>
+typedef struct s_Energycell EnergyCell;
+struct s_Energycell
+{
+    EnergyCell *next;
+    void *data;
+    int   x;
+    int   y;
+    int   value;
+};
 
+struct GameInfo {
   int map_size;
   int game_status;
   char* players[4];
-  //energy_cells liste chainée
+  EnergyCell *energy_cell;
 };
 
 int  pointeur_fonction(char* c);

@@ -6,6 +6,7 @@
 void *thread_1(void *router)
 {
     struct GameInfo player;
+    player.energy_cell = malloc(sizeof(EnergyCell));
     player.players[0] ="empty";
     player.players[1] ="empty";
     player.players[2] ="empty";
@@ -33,13 +34,14 @@ void *thread_1(void *router)
          else {
          }
       }
-      
+
       //STEVEN
       pointeur_fonction(zframe_strdup(content));
-
+      player.energy_cell->value = 4;
       zmsg_destroy(&message);
       for ( int i = 0; i <= 3; i++) {
          printf("Identity : %s\n", player.players[i]);
+
       }
       //printf("Content of message is : %s\n", zframe_strdup(content));
       sleep(2);
@@ -67,7 +69,7 @@ void *thread_1(void *router)
 int  pointeur_fonction(char* c)
 {
   char* token = strtok(c, "|"); //https://www.geeksforgeeks.org/how-to-split-a-string-in-cc-python-and-java/
-  printf(token, "%s");
+  puts(token);
   if(strcmp(token, "jump") == 0)
     {
         printf("Jump!\n" );
@@ -120,11 +122,13 @@ int  pointeur_fonction(char* c)
     {
         printf("selfstats\n" );
     }
-  else
+  else if (strcmp(token, "identify") == 0)
   {
-    printf("test\n");
+    printf("identify\n");
   }
-
+  else {
+    printf("error\n");
+  }
 
   return (0);
 }
