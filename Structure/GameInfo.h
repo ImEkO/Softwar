@@ -14,6 +14,16 @@ struct s_Energycell
     int   value;
 };
 
+typedef struct s_player Player;
+struct s_player
+{
+    char* name; /* pointeur sur une donnée générique */
+    int x;
+    int y;
+    int energy;
+    int looking;
+};
+
 struct GameInfo {
   int map_size;
   int game_status;
