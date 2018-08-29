@@ -16,11 +16,11 @@ rl.on('line', (line) => {
   switch (split[0]) {
     case 'identify':
       console.log('Identify');
-      identify(split[0], split[1]);
+      identify(split[0], split[1], line);
       break;
     case 'jump':
       console.log('Jump');
-      jump(split[0], split[1]);
+      jump(split[0], split[1], line);
       break;
     default:
       console.log("No identify");
@@ -32,7 +32,7 @@ rl.on('line', (line) => {
   process.exit(0);
 });
 
-function identify(cmd,id)
+function identify(cmd,id, line)
 {
   requester.identity = id
   requester.connect('tcp://localhost:3030');
@@ -43,11 +43,11 @@ function identify(cmd,id)
   });
 
   for (var i = 0; i < 10; ++i) {
-    requester.send(cmd);
+    requester.send(line);
   }
 }
 
-function jump(cmd,id)
+function jump(cmd,id, line)
 {
   requester.identity = id
   requester.connect('tcp://localhost:3030');
@@ -58,6 +58,6 @@ function jump(cmd,id)
   });
 
   for (var i = 0; i < 2; ++i) {
-    requester.send(cmd);
+    requester.send(line);
   }
 }
