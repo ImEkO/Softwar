@@ -69,7 +69,7 @@ void *thread_1(void *router)
 int  pointeur_fonction(char* c)
 {
   char* token = strtok(c, "|"); //https://www.geeksforgeeks.org/how-to-split-a-string-in-cc-python-and-java/
-  puts(token);
+  
   if(strcmp(token, "jump") == 0)
     {
         printf("Jump!\n" );

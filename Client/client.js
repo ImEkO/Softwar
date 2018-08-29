@@ -16,7 +16,7 @@ rl.on('line', (line) => {
   switch (split[0]) {
     case 'identify':
       console.log('Identify');
-      identify(split[1]);
+      identify(split[0], split[1]);
       break;
     case 'jump':
       console.log('Jump');
@@ -32,7 +32,7 @@ rl.on('line', (line) => {
   process.exit(0);
 });
 
-function identify(id)
+function identify(cmd,id)
 {
   requester.identity = id
   requester.connect('tcp://localhost:3030');
@@ -43,7 +43,7 @@ function identify(id)
   });
 
   for (var i = 0; i < 10; ++i) {
-    requester.send("Hello");
+    requester.send(cmd);
   }
 }
 
