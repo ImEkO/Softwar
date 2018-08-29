@@ -1,26 +1,44 @@
 var zmq       = require('zmq')
   , requester = zmq.socket('req');
 
-var randString = function() {
-  var len = 10
-    , charSet = '0123456789abcdef'
-    , result = [];
-
-  for (var i = 0; i < len; ++i) {
-    result.push(charSet[Math.floor(Math.random() * charSet.length)]);
-  }
-  result.splice(len / 2, 0, ['-']);
-  return result.join('');
-};
-
-requester.identity = randString();
-requester.connect('tcp://localhost:3030');
-var replyNbr = 0;
-requester.on('message', function(msg) {
-  console.log('got reply', replyNbr, msg.toString());
-  replyNbr += 1;
+const readline = require('readline');
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+  prompt: 'Command > '
 });
 
-for (var i = 0; i < 10; ++i) {
-  requester.send("Hello");
+rl.prompt();
+
+rl.on('line', (line) => {
+  var split = line.split("|");
+  console.log(split);
+  switch (split[0]) {
+    case 'Identify':
+      console.log('Identify');
+      identify(split[1]);
+      break;
+    default:
+      console.log("No identify");
+      break;
+  }
+  rl.prompt();
+}).on('close', () => {
+  console.log('Game Over');
+  process.exit(0);
+});
+
+function identify(id)
+{
+  requester.identity = id
+  requester.connect('tcp://localhost:3030');
+  var replyNbr = 0;
+  requester.on('message', function(msg) {
+  console.log('got reply', replyNbr, msg.toString());
+  replyNbr += 1;
+  });
+
+  for (var i = 0; i < 10; ++i) {
+    requester.send("Hello");
+  }
 }
