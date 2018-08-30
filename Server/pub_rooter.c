@@ -24,21 +24,27 @@ void *thread_1(void *publisher)
 
 int main(int argc, char* argv[])
 {
+  char* sub_port = "4242";
+  char* pub_port = "4243";
   pthread_t thread1;
-  if (argc < 2) {
-    printf("Port number is mandatory\n");
-    return 0;
+  for (int i = 0;i != argc;i++) {
+    if (!strcmp(argv[i], "--rep-port") || !strcmp(argv[i], "-rep-port")) {
+      sub_port = argv[i + 1];
+    }
+    if (!strcmp(argv[i], "--pub-port") || !strcmp(argv[i], "-pub-port")) {
+      pub_port = argv[i + 1];
+    }
   }
   //ROUTER
   zsock_t *router = zsock_new(ZMQ_ROUTER);
-  zsock_bind(router, "tcp://*:%s", argv[1]);
-  printf("Server listening on tcp://*:%s\n", argv[1]);
+  zsock_bind(router, "tcp://*:%s", sub_port);
+  printf("Server listening on tcp://*:%s\n", sub_port);
 
   //PUB
   void *context = zmq_ctx_new ();
   void *publisher = zmq_socket (context, ZMQ_PUB);
+  //zmq_bind (publisher, strcat(pub_port, "tcp://*:"));
   zmq_bind (publisher, "tcp://*:4243");
-
   //THREAD
   if (pthread_create(&thread1, NULL, thread_1, publisher)) {
   perror("pthread_create");
@@ -77,8 +83,8 @@ int main(int argc, char* argv[])
         zframe_destroy(&identity);
         zframe_destroy(&empty);
         zframe_destroy(&content);
-        
-        
+
+
   }
 
     if (pthread_join(thread1, NULL)) {
