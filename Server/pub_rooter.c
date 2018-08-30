@@ -3,7 +3,8 @@
 #include <stdio.h>
 #include <czmq.h>
 
-int sizMap = 0;
+int sizeMap = 0;
+int cycle = 0;
 
 void *thread_1(void *publisher)
 {
@@ -34,7 +35,17 @@ int main(int argc, char* argv[])
     if (!strcmp(argv[i], "--pub-port") || !strcmp(argv[i], "-pub-port")) {
       pub_port = argv[i + 1];
     }
+    if (!strcmp(argv[i], "--size") || !strcmp(argv[i], "-size")) {
+      sizeMap = argv[i + 1];
+    }
+    if (!strcmp(argv[i], "--cycle") || !strcmp(argv[i], "-cycle")) {
+      cycle =  argv[i + 1];
+    }
   }
+  printf("%s\n", sub_port);
+  printf("%s\n", pub_port);
+  printf("%i\n", cycle);
+  printf("%i\n", sizeMap);
   //ROUTER
   zsock_t *router = zsock_new(ZMQ_ROUTER);
   zsock_bind(router, "tcp://*:%s", sub_port);
