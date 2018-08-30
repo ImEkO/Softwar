@@ -155,3 +155,63 @@ function backward(cmd, id, line)
     requester.send(line);
   }
 }
+
+function leftfwd(cmd, id, line)
+{
+  requester.identity = id
+  requester.connect('tcp://localhost:4242');
+  var replyNbr = 0;
+  requester.on('message', function(msg) {
+  console.log('got reply', replyNbr, msg.toString());
+  replyNbr += 1;
+  });
+
+  for (var i = 0; i < 2; ++i) {
+    requester.send(line);
+  }
+}
+
+function rightfwd(cmd, id, line)
+{
+  requester.identity = id
+  requester.connect('tcp://localhost:4242');
+  var replyNbr = 0;
+  requester.on('message', function(msg) {
+  console.log('got reply', replyNbr, msg.toString());
+  replyNbr += 1;
+  });
+
+  for (var i = 0; i < 2; ++i) {
+    requester.send(line);
+  }
+}
+
+function right(cmd, id, line)
+{
+  requester.identity = id
+  requester.connect('tcp://localhost:4242');
+  var replyNbr = 0;
+  requester.on('message', function(msg) {
+  console.log('got reply', replyNbr, msg.toString());
+  replyNbr += 1;
+  });
+
+  for (var i = 0; i < 2; ++i) {
+    requester.send(line);
+  }
+}
+
+function left(cmd, id, line)
+{
+  requester.identity = id
+  requester.connect('tcp://localhost:4242');
+  var replyNbr = 0;
+  requester.on('message', function(msg) {
+  console.log('got reply', replyNbr, msg.toString());
+  replyNbr += 1;
+  });
+
+  for (var i = 0; i < 2; ++i) {
+    requester.send(line);
+  }
+}
