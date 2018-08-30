@@ -15,5 +15,4 @@ node client.js
 let's go !  
 
 ## DOC CLIENT AFFICHAGE C :
-
 gcc -pthread pub_rooter.c tools.c -lzmq -lczmq -o pubrooter

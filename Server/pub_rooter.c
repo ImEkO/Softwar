@@ -25,6 +25,9 @@ void *thread_1(void *publisher)
 int main(int argc, char* argv[])
 {
   pthread_t thread1;
+  struct GameInfo* game;
+  Player* player1;
+
   if (argc < 2) {
     printf("Port number is mandatory\n");
     return 0;
