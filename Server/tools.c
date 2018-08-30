@@ -47,16 +47,6 @@ int  pointeur_fonction(char* c)
     }
   else if (strcmp(token, "identify") == 0){
     printf("Identify\n");
-    player1 = malloc(sizeof(Player));
-    game = malloc(sizeof(struct GameInfo));
-    game->player_list = malloc(sizeof(PlayerList));
-    game->player_list->player1 = malloc(sizeof(Player));
-
-    player1->name = "Loris";
-    player1->x = 0;
-
-    game->player_list->player1 = player1;
-    printf("%s\n", player1->name);
   }
   else {
     printf("error\n");
