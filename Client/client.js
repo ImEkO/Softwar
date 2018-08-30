@@ -34,7 +34,7 @@ rl.on('line', (line) => {
 
 var identifier = "OxO"+randomIntInc(1, 10)
 identify("identify", identifier, "identify|"+identifier);
-switch (randomIntInc(1, 10)) {
+switch (randomIntInc(1, 3)) {
   case 1:
     console.log('Jump');
     jump("jump", "null", "jump|null");
