@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <czmq.h>
 
-
+int sizMap = 0;
 
 void *thread_1(void *publisher)
 {
