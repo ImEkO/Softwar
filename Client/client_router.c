@@ -20,12 +20,13 @@ int main (int argc, char *argv[])
   zsock_connect(req, "tcp://localhost:%s", argv[1]);
 
   int request_nbr;
-  while(!zsys_interrupted) {
-    zstr_sendf(req, "Hello world !");
+  zstr_sendf(req, "Hello world !");
+  char *message = zstr_recv(req);
+  printf("Received : %s\n", message);
+  zstr_free(&message);
+  while(1)
+  {
 
-    char *message = zstr_recv(req);
-    printf("Received : %s\n", message);
-    zstr_free(&message);
   }
   zsock_destroy(&req);
   return 0;

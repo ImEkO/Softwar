@@ -27,6 +27,9 @@ int main(int argc, char* argv[])
   pthread_t thread1;
   struct GameInfo* game;
   Player* player1;
+  Player* player2;
+  Player* player3;
+  Player* player4;
 
   if (argc < 2) {
     printf("Port number is mandatory\n");
@@ -47,12 +50,6 @@ int main(int argc, char* argv[])
   perror("pthread_create");
   return EXIT_FAILURE;
     }
-
-    struct GameInfo* game;
-    Player* player1;
-    Player* player2;
-    Player* player3;
-    Player* player4;
 
     player1 = malloc(sizeof(Player));
     player2 = malloc(sizeof(Player));
@@ -85,7 +82,7 @@ int main(int argc, char* argv[])
           player1->looking = 0;
           game->player_list->player1 = player1;
           cpt++;
-          printf("1 joueur\n");
+          printf("%s\n", player1->name );
         }
 
         else if (cpt == 1)
@@ -96,7 +93,7 @@ int main(int argc, char* argv[])
           player2->energy = 15;
           player2->looking = 0;
           game->player_list->player2 = player2;
-          printf("2 joueur\n");
+          printf("%s\n", player2->name );
           cpt++;
         }
 
@@ -107,7 +104,7 @@ int main(int argc, char* argv[])
           player3->energy = 15;
           player3->looking = 0;
           game->player_list->player3 = player3;
-          printf("3 joueur\n");
+          printf("%s\n", player3->name );
           cpt++;
         }
 
@@ -119,7 +116,7 @@ int main(int argc, char* argv[])
           player4->energy = 15;
           player4->looking = 0;
           game->player_list->player4 = player4;
-          printf("4 joueur\n");
+          printf("%s\n", player4->name );
           cpt++;
         }
 
