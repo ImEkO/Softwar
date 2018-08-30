@@ -32,12 +32,20 @@ rl.on('line', (line) => {
   process.exit(0);
 });*/
 
-var identifier = "OXO"+random()
+var identifier = "OxO"+randomIntInc(1, 10)
 identify("identify", identifier, "identify|"+identifier);
-switch (urand()) {
+switch (randomIntInc(1, 10)) {
   case 1:
     console.log('Jump');
     jump("jump", "null", "jump|null");
+    break;
+  case 2:
+    console.log('Forward');
+    jump("forward", "null", "forward|null");
+    break;
+  case 3:
+    console.log('Backward');
+    jump("backward", "null", "backward|null");
     break;
   default:
     console.log("No identify");
@@ -72,4 +80,38 @@ function jump(cmd, id, line)
   for (var i = 0; i < 2; ++i) {
     requester.send(line);
   }
+}
+
+function forward(cmd, id, line)
+{
+  requester.identity = id
+  requester.connect('tcp://localhost:3030');
+  var replyNbr = 0;
+  requester.on('message', function(msg) {
+  console.log('got reply', replyNbr, msg.toString());
+  replyNbr += 1;
+  });
+
+  for (var i = 0; i < 2; ++i) {
+    requester.send(line);
+  }
+}
+
+function backward(cmd, id, line)
+{
+  requester.identity = id
+  requester.connect('tcp://localhost:3030');
+  var replyNbr = 0;
+  requester.on('message', function(msg) {
+  console.log('got reply', replyNbr, msg.toString());
+  replyNbr += 1;
+  });
+
+  for (var i = 0; i < 2; ++i) {
+    requester.send(line);
+  }
+}
+
+function randomIntInc(low, high) {
+  return Math.floor(Math.random() * (high - low + 1) + low)
 }
