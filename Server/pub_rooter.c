@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
   Player* player2;
   Player* player3;
   Player* player4;
-  
+
   for (int i = 0;i != argc;i++) {
     if (!strcmp(argv[i], "--rep-port") || !strcmp(argv[i], "-rep-port")) {
       sub_port = argv[i + 1];
@@ -42,10 +42,10 @@ int main(int argc, char* argv[])
       pub_port = argv[i + 1];
     }
     if (!strcmp(argv[i], "--size") || !strcmp(argv[i], "-size")) {
-      sizeMap = argv[i + 1];
+      sizeMap = atoi(argv[i + 1]);
     }
     if (!strcmp(argv[i], "--cycle") || !strcmp(argv[i], "-cycle")) {
-      cycle =  argv[i + 1];
+      cycle =  atoi(argv[i + 1]);
     }
   }
 
@@ -81,7 +81,7 @@ int main(int argc, char* argv[])
     game->player_list = malloc(sizeof(PlayerList));
     game->player_list->player1 = malloc(sizeof(Player));
 
-    
+
     game->player_list->player2 = player2;
     game->player_list->player3 = player3;
     game->player_list->player4 = player4;
@@ -95,7 +95,7 @@ int main(int argc, char* argv[])
         zframe_t *empty = zmsg_pop(message);
         zframe_t *content = zmsg_pop(message);
         zmsg_t *response = zmsg_new();
-        
+
         if(cpt == 0){
           player1->name = zframe_strdup(identity);
           player1->x = 0;
