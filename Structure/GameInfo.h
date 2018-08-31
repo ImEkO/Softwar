@@ -36,7 +36,6 @@ struct s_player_list
 struct GameInfo {
   int map_size;
   int game_status;
-  //char* players[4];
   EnergyCell *energy_cell;
   PlayerList *player_list;
 };
@@ -45,6 +44,8 @@ struct Manager
 {
     struct GameInfo *gameinfo;
     void* publisher;
+    int sizeMap;
+    int cycle;
 };
 
 int  pointeur_fonction(char* c);

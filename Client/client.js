@@ -33,59 +33,67 @@ rl.on('line', (line) => {
 });*/
 
 var identifier = "OxO"+randomIntInc(1, 10)
-identify("identify", identifier, "identify|"+identifier);
+requester.identity = identifier;
+requester.connect('tcp://localhost:4242');
+
+identify("identify", requester, "identify|"+identifier);
+jump("jump", requester, "jump|null");
+jump("forward", requester, "forward|null");
+jump("forward", requester, "forward|null");
+jump("backward", requester, "backward|null");
+
 switch (randomIntInc(1, 13)) {
   case 1:
     console.log('Jump');
-    jump("jump", "null", "jump|null");
+    jump("jump", requester, "jump|null");
     break;
   case 2:
     console.log('Forward');
-    jump("forward", "null", "forward|null");
+    jump("forward", requester, "forward|null");
     break;
   case 3:
     console.log('Backward');
-    jump("backward", "null", "backward|null");
+    jump("backward", requester, "backward|null");
     break;
   case 4:
     console.log('leftfwd');
-    jump("leftfwd", "null", "leftfwd|null");
+    jump("leftfwd", requester, "leftfwd|null");
     break;
   case 5:
     console.log('rightfwd');
-    jump("rightfwd", "null", "rightfwd|null");
+    jump("rightfwd", requester, "rightfwd|null");
     break;
   case 6:
     console.log('right');
-    jump("right", "null", "right|null");
+    jump("right", requester, "right|null");
     break;
   case 7:
     console.log('left');
-    jump("left", "null", "left|null");
+    jump("left", requester, "left|null");
     break;
   case 8:
     console.log('looking');
-    jump("looking", "null", "looking|null");
+    jump("looking", requester, "looking|null");
     break;
   case 9:
     console.log('gather');
-    jump("gather", "null", "gather|null");
+    jump("gather", requester, "gather|null");
     break;
   case 10:
     console.log('watch');
-    jump("watch", "null", "watch|null");
+    jump("watch", requester, "watch|null");
     break;
   case 11:
     console.log('attack');
-    jump("attack", "null", "attack|null");
+    jump("attack", requester, "attack|null");
     break;
   case 12:
     console.log('selfid');
-    jump("selfid", "null", "selfid|null");
+    jump("selfid", requester, "selfid|null");
     break;
   case 13:
     console.log('selfstats');
-    jump("selfstats", "null", "selfstats|null");
+    jump("selfstats", requester, "selfstats|null");
     break;
   default:
     console.log("No identify");
@@ -96,25 +104,29 @@ function randomIntInc(low, high) {
   return Math.floor(Math.random() * (high - low + 1) + low)
 }
 
-function identify(cmd, id, line)
+function identify(cmd, requester, line)
 {
-  requester.identity = id
-  requester.connect('tcp://localhost:4242');
+
   var replyNbr = 0;
   requester.on('message', function(msg) {
   console.log('got reply', replyNbr, msg.toString());
   replyNbr += 1;
   });
-
-  for (var i = 0; i < 10; ++i) {
-    requester.send(line);
-  }
+  requester.send(line);
 }
 
-function jump(cmd, id, line)
+function jump(cmd, requester, line)
 {
-  requester.identity = id
-  requester.connect('tcp://localhost:4242');
+  var replyNbr = 0;
+  requester.on('message', function(msg) {
+  console.log('got reply', replyNbr, msg.toString());
+  replyNbr += 1;
+  });
+    requester.send(line);
+}
+
+function forward(cmd, requester, line)
+{
   var replyNbr = 0;
   requester.on('message', function(msg) {
   console.log('got reply', replyNbr, msg.toString());
@@ -126,10 +138,8 @@ function jump(cmd, id, line)
   }
 }
 
-function forward(cmd, id, line)
+function backward(cmd, requester, line)
 {
-  requester.identity = id
-  requester.connect('tcp://localhost:4242');
   var replyNbr = 0;
   requester.on('message', function(msg) {
   console.log('got reply', replyNbr, msg.toString());
@@ -141,10 +151,20 @@ function forward(cmd, id, line)
   }
 }
 
-function backward(cmd, id, line)
+function leftfwd(cmd, requester, line)
 {
-  requester.identity = id
-  requester.connect('tcp://localhost:4242');
+  var replyNbr = 0;
+  requester.on('message', function(msg) {
+  console.log('got reply', replyNbr, msg.toString());
+  replyNbr += 1;
+  });
+
+    requester.send(line);
+
+}
+
+function rightfwd(cmd, requester, line)
+{
   var replyNbr = 0;
   requester.on('message', function(msg) {
   console.log('got reply', replyNbr, msg.toString());
@@ -156,62 +176,25 @@ function backward(cmd, id, line)
   }
 }
 
-function leftfwd(cmd, id, line)
+function right(cmd, requester, line)
 {
-  requester.identity = id
-  requester.connect('tcp://localhost:4242');
   var replyNbr = 0;
   requester.on('message', function(msg) {
   console.log('got reply', replyNbr, msg.toString());
   replyNbr += 1;
   });
 
-  for (var i = 0; i < 2; ++i) {
     requester.send(line);
-  }
 }
 
-function rightfwd(cmd, id, line)
+function left(cmd, requester, line)
 {
-  requester.identity = id
-  requester.connect('tcp://localhost:4242');
   var replyNbr = 0;
   requester.on('message', function(msg) {
   console.log('got reply', replyNbr, msg.toString());
   replyNbr += 1;
   });
 
-  for (var i = 0; i < 2; ++i) {
     requester.send(line);
-  }
-}
 
-function right(cmd, id, line)
-{
-  requester.identity = id
-  requester.connect('tcp://localhost:4242');
-  var replyNbr = 0;
-  requester.on('message', function(msg) {
-  console.log('got reply', replyNbr, msg.toString());
-  replyNbr += 1;
-  });
-
-  for (var i = 0; i < 2; ++i) {
-    requester.send(line);
-  }
-}
-
-function left(cmd, id, line)
-{
-  requester.identity = id
-  requester.connect('tcp://localhost:4242');
-  var replyNbr = 0;
-  requester.on('message', function(msg) {
-  console.log('got reply', replyNbr, msg.toString());
-  replyNbr += 1;
-  });
-
-  for (var i = 0; i < 2; ++i) {
-    requester.send(line);
-  }
 }
