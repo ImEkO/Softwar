@@ -66,10 +66,10 @@ int main(int argc, char* argv[])
   manager->publisher = publisher;
 
   //THREAD
-  /*if (pthread_create(&thread1, NULL, thread_1, manager)) {
+  if (pthread_create(&thread1, NULL, thread_1, manager)) {
   perror("pthread_create");
   return EXIT_FAILURE;
-    }*/
+    }
 
   player1 = malloc(sizeof(Player));
   player2 = malloc(sizeof(Player));
