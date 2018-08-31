@@ -22,7 +22,6 @@ void *thread_1(struct Manager* manager)
 }
 
 
-
 int main(int argc, char* argv[])
 {
   char* sub_port = "4242";
@@ -90,17 +89,16 @@ int main(int argc, char* argv[])
   player4->name = "empty";
 
     //game->energy_cell = malloc(sizeof(EnergyCell));
-    //game->energy_cell->value = 4;
+    //game->energy_cell->value = 4
   while (!zsys_interrupted) {
     zmsg_t *message = zmsg_recv(router);
     zframe_t *identity = zmsg_pop(message);
     zframe_t *empty = zmsg_pop(message);
     zframe_t *content = zmsg_pop(message);
     zmsg_t *response = zmsg_new();
-
-    printf("1%s\n", zframe_strdup(identity));
-    while(!strcmp(player4->name, "empty"))
-    {
+    int i = pointeur_fonction(zframe_strdup(content));
+    printf("%i\n", i);
+    if(!strcmp(player4->name, "empty")) {
       if(!strcmp(player1->name, "empty")) {
         player1->name = zframe_strdup(identity);
         player1->x = 0;
@@ -108,6 +106,7 @@ int main(int argc, char* argv[])
         player1->energy = 15;
         player1->looking = 0;
         game->player_list->player1 = player1;
+        printf("p1\n");
       } else if (!strcmp(player2->name, "empty") && strcmp(player1->name, zframe_strdup(identity)) && strcmp(player1->name, "empty")) {
         player2->name = zframe_strdup(identity);
         player2->x = 0;
@@ -115,22 +114,25 @@ int main(int argc, char* argv[])
         player2->energy = 15;
         player2->looking = 0;
         game->player_list->player2 = player2;
+        printf("p2\n");
 
-      } else if(!strcmp(player3->name, "empty")  && strcmp(player2->name, zframe_strdup(identity)) && strcmp(player2->name, "empty")) {
+      } else if(!strcmp(player3->name, "empty")  && strcmp(player2->name, zframe_strdup(identity)) && strcmp(player2->name, "empty") && strcmp(player1->name, "empty")) {
         player3->name = zframe_strdup(identity);
         player3->x = 0;
         player3->y = 0;
         player3->energy = 15;
         player3->looking = 0;
         game->player_list->player3 = player3;
+        printf("p3\n");
 
-      } else if(!strcmp(player4->name, "empty")  && strcmp(player3->name, zframe_strdup(identity)) && strcmp(player3->name, "empty")) {
+      } else if(!strcmp(player4->name, "empty")  && strcmp(player3->name, zframe_strdup(identity)) && strcmp(player3->name, "empty") && strcmp(player2->name, "empty")) {
         player4->name = zframe_strdup(identity);
         player4->x = 0;
         player4->y = 0;
         player4->energy = 15;
         player4->looking = 0;
         game->player_list->player4 = player4;
+        printf("p4\n");
       }
       sleep(1);
       printf("%s\n", player1->name);
@@ -138,17 +140,27 @@ int main(int argc, char* argv[])
       printf("%s\n", player3->name);
       printf("%s\n", player4->name);
       content = zframe_from("ko|null");
-      /*zmsg_prepend(response, &identity);
+      zmsg_prepend(response, &identity);
       zmsg_append(response, &empty);
       zmsg_append(response, &content);
       zmsg_send(&response, router);
-      zmsg_destroy(&response);*/
+      zmsg_destroy(&response);
     }
-    printf("fini boucle\n");
-    pointeur_fonction(zframe_strdup(content));
-    zframe_destroy(&identity);
-    zframe_destroy(&empty);
-    zframe_destroy(&content);
+    else if(i == 1){
+      /*content = zframe_from("ok|null");
+      zmsg_prepend(response, &identity);
+      zmsg_append(response, &empty);
+      zmsg_append(response, &content);
+      zmsg_send(&response, router);
+      zmsg_destroy(&response);
+      pointeur_fonction(zframe_strdup(content));
+      zframe_destroy(&identity);
+      zframe_destroy(&empty);
+      zframe_destroy(&content);*/
+      printf("KO | Partie Full\n");
+    } else {
+      printf("KO | NULL\n");
+    }
   }
 
   if (pthread_join(thread1, NULL)) {

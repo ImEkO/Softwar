@@ -47,6 +47,7 @@ int  pointeur_fonction(char* c)
     }
   else if (strcmp(token, "identify") == 0){
     printf("Identify\n");
+    return 1;
   }
   else {
     printf("error\n");
