@@ -23,6 +23,7 @@ struct s_player
     int looking;
 };
 
+
 typedef struct s_player_list PlayerList;
 struct s_player_list
 {
@@ -38,6 +39,12 @@ struct GameInfo {
   //char* players[4];
   EnergyCell *energy_cell;
   PlayerList *player_list;
+};
+
+struct Manager
+{
+    struct GameInfo *gameinfo;
+    void* publisher;
 };
 
 int  pointeur_fonction(char* c);

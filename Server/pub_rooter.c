@@ -6,18 +6,19 @@
 int sizeMap = 0;
 int cycle = 0;
 
-void *thread_1(void *publisher)
+void *thread_1(struct Manager* manager)
 {
     printf("Server listening on tcp://*:localhost:4243\n");
     while (1) {
         //  Write two messages, each with an envelope and content
-        zstr_send(publisher, "5 énergie généré");
+        manager->gameinfo += 5;
+        zstr_send(manager->publisher, "5 énergie généré");
         sleep (1);
     }
     //  We never get here, but clean up anyhow
-    zmq_close (publisher);
+    zmq_close (manager->publisher);
     /* Pour enlever le warning */
-    (void) publisher;
+    (void) manager->publisher;
     pthread_exit(NULL);
 }
 
@@ -28,6 +29,8 @@ int main(int argc, char* argv[])
   char* sub_port = "4242";
   char* pub_port = "4243";
   pthread_t thread1;
+  struct Manager* manager;
+  manager = malloc(sizeof(struct Manager));
   struct GameInfo* game;
   Player* player1;
   Player* player2;
@@ -67,8 +70,11 @@ int main(int argc, char* argv[])
   void *publisher = zmq_socket (context, ZMQ_PUB);
   //zmq_bind (publisher, strcat(pub_port, "tcp://*:"));
   zmq_bind (publisher, "tcp://*:4243");
+    manager->gameinfo = game;
+  manager->publisher = publisher;
+
   //THREAD
-  if (pthread_create(&thread1, NULL, thread_1, publisher)) {
+  if (pthread_create(&thread1, NULL, thread_1, manager)) {
   perror("pthread_create");
   return EXIT_FAILURE;
     }
@@ -96,7 +102,7 @@ int main(int argc, char* argv[])
         zframe_t *content = zmsg_pop(message);
         zmsg_t *response = zmsg_new();
 
-        if(cpt == 0){
+        if(cpt == 0) {
           player1->name = zframe_strdup(identity);
           player1->x = 0;
           player1->y = 0;
@@ -106,9 +112,7 @@ int main(int argc, char* argv[])
           cpt++;
           printf("%s\n", player1->name );
         }
-
-        else if (cpt == 1)
-        {
+        else if (cpt == 1) {
           player2->name = zframe_strdup(identity);
           player2->x = 0;
           player2->y = 0;
@@ -118,8 +122,7 @@ int main(int argc, char* argv[])
           printf("%s\n", player2->name );
           cpt++;
         }
-
-        else if( cpt == 2){
+        else if( cpt == 2) {
           player3->name = zframe_strdup(identity);
           player3->x = 0;
           player3->y = 0;
@@ -129,9 +132,7 @@ int main(int argc, char* argv[])
           printf("%s\n", player3->name );
           cpt++;
         }
-
-        else if( cpt == 3)
-        {
+        else if( cpt == 3) {
           player4->name = zframe_strdup(identity);
           player4->x = 0;
           player4->y = 0;
@@ -141,8 +142,7 @@ int main(int argc, char* argv[])
           printf("%s\n", player4->name );
           cpt++;
         }
-
-        else{
+        else {
           printf("Bloque\n");
         }
 
@@ -155,8 +155,6 @@ int main(int argc, char* argv[])
         zframe_destroy(&identity);
         zframe_destroy(&empty);
         zframe_destroy(&content);
-
-
   }
 
     if (pthread_join(thread1, NULL)) {

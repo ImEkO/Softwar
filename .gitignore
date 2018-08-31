@@ -77,3 +77,7 @@ Server/Server
 
 # exectuable pubrooter.c
 Server/pubrooter
+
+Client/client
+
+Client/affichage
