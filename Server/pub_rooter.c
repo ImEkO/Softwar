@@ -3,8 +3,8 @@
 #include <stdio.h>
 #include <czmq.h>
 
-int sizeMap = 0;
-int cycle = 0;
+int sizeMap = 6;
+int cycle = 1;
 
 void *thread_1(struct Manager* manager)
 {
@@ -52,14 +52,6 @@ int main(int argc, char* argv[])
     }
   }
 
-  if (argc < 2) {
-    printf("Port number is mandatory\n");
-    return 0;
-  }
-  printf("%s\n", sub_port);
-  printf("%s\n", pub_port);
-  printf("%i\n", cycle);
-  printf("%i\n", sizeMap);
   //ROUTER
   zsock_t *router = zsock_new(ZMQ_ROUTER);
   zsock_bind(router, "tcp://*:%s", sub_port);
@@ -87,10 +79,10 @@ int main(int argc, char* argv[])
     game->player_list = malloc(sizeof(PlayerList));
     game->player_list->player1 = malloc(sizeof(Player));
 
-
     game->player_list->player2 = player2;
     game->player_list->player3 = player3;
     game->player_list->player4 = player4;
+    game->map_size = sizeMap;
 
     //game->energy_cell = malloc(sizeof(EnergyCell));
     //game->energy_cell->value = 4;
@@ -110,7 +102,7 @@ int main(int argc, char* argv[])
           player1->looking = 0;
           game->player_list->player1 = player1;
           cpt++;
-          printf("%s\n", player1->name );
+          printf("%s\n", player1->name);
         }
         else if (cpt == 1) {
           player2->name = zframe_strdup(identity);
@@ -119,7 +111,7 @@ int main(int argc, char* argv[])
           player2->energy = 15;
           player2->looking = 0;
           game->player_list->player2 = player2;
-          printf("%s\n", player2->name );
+          printf("%s\n", player2->name);
           cpt++;
         }
         else if( cpt == 2) {
@@ -129,7 +121,7 @@ int main(int argc, char* argv[])
           player3->energy = 15;
           player3->looking = 0;
           game->player_list->player3 = player3;
-          printf("%s\n", player3->name );
+          printf("%s\n", player3->name);
           cpt++;
         }
         else if( cpt == 3) {
@@ -139,7 +131,7 @@ int main(int argc, char* argv[])
           player4->energy = 15;
           player4->looking = 0;
           game->player_list->player4 = player4;
-          printf("%s\n", player4->name );
+          printf("%s\n", player4->name);
           cpt++;
         }
         else {
@@ -161,7 +153,6 @@ int main(int argc, char* argv[])
   perror("pthread_join");
   return EXIT_FAILURE;
     }
-
     printf("Après la création du thread.\n");
 
   return 0;
