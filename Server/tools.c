@@ -2,6 +2,8 @@
 
 int  pointeur_fonction(char* c)
 {
+  struct GameInfo* game;
+  Player* player1;
   char* token = strtok(c, "|"); //https://www.geeksforgeeks.org/how-to-split-a-string-in-cc-python-and-java/
 
   if(strcmp(token, "jump") == 0){
@@ -50,5 +52,5 @@ int  pointeur_fonction(char* c)
     printf("error\n");
   }
 
-  return (0);
+  return 0;
 }
