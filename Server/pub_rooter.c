@@ -47,6 +47,7 @@ int main(int argc, char* argv[])
     if (!strcmp(argv[i], "--cycle") || !strcmp(argv[i], "-cycle")) {
       cycle =  argv[i + 1];
     }
+  }
 
   if (argc < 2) {
     printf("Port number is mandatory\n");

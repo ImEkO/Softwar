@@ -71,3 +71,9 @@ typings/
 
 # Serverless directories
 .serverless
+
+# executable server.c
+Server/Server
+
+# exectuable pubrooter.c
+Server/pubrooter
