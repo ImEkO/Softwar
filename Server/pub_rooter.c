@@ -91,7 +91,6 @@ int main(int argc, char* argv[])
 
     //game->energy_cell = malloc(sizeof(EnergyCell));
     //game->energy_cell->value = 4;
-  int cpt = 0;
   while (!zsys_interrupted) {
     zmsg_t *message = zmsg_recv(router);
     zframe_t *identity = zmsg_pop(message);
@@ -99,48 +98,45 @@ int main(int argc, char* argv[])
     zframe_t *content = zmsg_pop(message);
     zmsg_t *response = zmsg_new();
 
+    printf("1%s\n", zframe_strdup(identity));
     while(!strcmp(player4->name, "empty"))
     {
-      if(cpt == 0) {
+      if(!strcmp(player1->name, "empty")) {
         player1->name = zframe_strdup(identity);
         player1->x = 0;
         player1->y = 0;
         player1->energy = 15;
         player1->looking = 0;
         game->player_list->player1 = player1;
-        cpt++;
-        printf("%s\n", player1->name);
-
-      } else if (cpt == 1 && strcmp(player1->name, zframe_strdup(identity))) {
+      } else if (!strcmp(player2->name, "empty") && strcmp(player1->name, zframe_strdup(identity)) && strcmp(player1->name, "empty")) {
         player2->name = zframe_strdup(identity);
         player2->x = 0;
         player2->y = 0;
         player2->energy = 15;
         player2->looking = 0;
         game->player_list->player2 = player2;
-        printf("%s\n", player2->name);
-        cpt++;
 
-      } else if( cpt == 2  && strcmp(player2->name, zframe_strdup(identity))) {
+      } else if(!strcmp(player3->name, "empty")  && strcmp(player2->name, zframe_strdup(identity)) && strcmp(player2->name, "empty")) {
         player3->name = zframe_strdup(identity);
         player3->x = 0;
         player3->y = 0;
         player3->energy = 15;
         player3->looking = 0;
         game->player_list->player3 = player3;
-        printf("%s\n", player3->name);
-        cpt++;
 
-      } else if( cpt == 3  && strcmp(player3->name, zframe_strdup(identity))) {
+      } else if(!strcmp(player4->name, "empty")  && strcmp(player3->name, zframe_strdup(identity)) && strcmp(player3->name, "empty")) {
         player4->name = zframe_strdup(identity);
         player4->x = 0;
         player4->y = 0;
         player4->energy = 15;
         player4->looking = 0;
         game->player_list->player4 = player4;
-        printf("%s\n", player4->name);
-        cpt++;
       }
+      sleep(1);
+      printf("%s\n", player1->name);
+      printf("%s\n", player2->name);
+      printf("%s\n", player3->name);
+      printf("%s\n", player4->name);
       content = zframe_from("ko|null");
       /*zmsg_prepend(response, &identity);
       zmsg_append(response, &empty);
